@@ -29,7 +29,7 @@ class Product(models.Model):
     updated = models.DateTimeField(auto_now=True)
     
     class Meta:
-        oredering = ['name']
+        ordering = ['name']
         indexes = [
             models.Index(fields=['id', 'slug']),
             models.Index(fields=['name']),
