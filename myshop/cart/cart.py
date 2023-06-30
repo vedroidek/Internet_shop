@@ -36,7 +36,8 @@ class Cart:
             del self.cart[product_id]
             self.save()
 
-    def __iter__(self):
+    def __iter__(self) -> Decimal:
+        """ Getting the items in the cart from the database. """
         product_ids = self.cart.keys()
         products = Product.objects.filter(id__in=product_ids)
         cart = self.cart.copy()
@@ -46,3 +47,7 @@ class Cart:
             item['price'] = Decimal(item['price'])
             item['total_price'] = item['price'] * item['quantity']
             yield item
+
+    def __len__(self) -> int:  # Mister Obvious :)
+        """ Counting all items in the shopping cart. """
+        return sum(item['quantity'] for item in self.cart.values())
