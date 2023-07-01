@@ -7,6 +7,7 @@ from ..cart.forms import CartAddProductForm
 
 
 def product_list(request, category_slug=None):
+    """ Show products list. """
     category = None
     categories = Category.objects.all()
     products = Product.objects.filter(available=True)
@@ -19,6 +20,7 @@ def product_list(request, category_slug=None):
 
 
 def product_detail(request, id, slug):
+    """ Show detail info by product. """
     product = get_object_or_404(Product, id=id, slug=slug, available=True)
     return render(request, 'shop/product/detail.html', {'product': product})
 
@@ -37,6 +39,7 @@ def cart_add(request, product_id):
 
 @require_POST
 def cart_remove(request, product_id):
+    """ Remove product from cart by id. """
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
     cart.remove(product)
@@ -44,5 +47,6 @@ def cart_remove(request, product_id):
 
 
 def cart_detail(request):
+    """ Template link function for cart_add and cart_remove. """
     cart = Cart(request)
     return render(request, 'cart/detail.html', {'cart': cart})
