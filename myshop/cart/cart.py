@@ -4,6 +4,10 @@ from shop.models import Product
 
 
 class Cart:
+    """ The session state management class for the user.
+    Saves data about the products and their total prices
+    added to the cart before the purchase/cancellation/closing of the browser. """
+
     def __init__(self, request):
         """ Initial cart """
         self.session = request.session
