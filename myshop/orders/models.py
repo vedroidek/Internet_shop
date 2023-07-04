@@ -1,4 +1,5 @@
 from django.db import models
+from shop.models import Product
 
 
 class Order(models.Model):
@@ -24,5 +25,24 @@ class Order(models.Model):
         return f'Order {self.id}'
 
     def get_total_cost(self) -> int | float:
-        """ Total Order Value. """
+        """ Total Order Value. Refers to the OrderItem get_cost() method of the model,
+        which calculates the cost of a similar item. For each type,
+        a subset is made and the total cost of the order is
+        determined by enumeration of each position in the list."""
         return sum(item.get_cost() for item in self.items.all())
+
+
+class OrderItem(models.Model):
+    """ The model stores data about purchased goods. """
+    order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, related_name='order_items', on_delete=models.CASCADE)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    quantity = models.PositiveIntegerField(default=1)
+
+    def __str__(self) -> str:
+        return f'{self.id}'
+
+    def get_cost(self) -> float:
+        """ Calculation of the cost of the same type of goods
+        by multiplying the quantity by the cost. """
+        return self.price * self.quantity
