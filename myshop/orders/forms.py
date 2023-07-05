@@ -2,7 +2,7 @@ from django import forms
 from .models import Order
 
 
-class OrderCreationForm(forms.ModelForm):
+class OrderCreateForm(forms.ModelForm):
     """ Form for creating objects of 'Orders' """
     class Meta:
         model = Order
