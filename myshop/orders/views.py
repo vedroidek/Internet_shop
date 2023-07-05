@@ -6,6 +6,7 @@ from Internet_shop.myshop.orders.models import OrderItem
 
 
 def order_create(request):
+    """ The view receives data from the form to create a new order. """
     cart = Cart(request)
     if request.method == 'POST':
         form = OrderCreateForm(request.POST)
