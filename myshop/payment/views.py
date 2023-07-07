@@ -13,6 +13,10 @@ stripe.api_version = settings.STRIPE_API_VERSION
 
 
 def payment_process(request):
+    """ Payment presentation.
+    In the view, a session is created with data about the user,
+    goods, and their cost. Redirect to the successful payment page
+    or to the transaction cancellation page. """
     order_id = request.session.get('order_id', None)
     order = get_object_or_404(Order, id=order_id)
     if request.method == 'POST':
@@ -42,7 +46,10 @@ def payment_process(request):
 
 
 def payment_completed(request):
+    """ Display template on successful payment. """
     return render(request, 'payment/completed.html')
 
 def payment_canceled(request):
+    """ Displaying a template when a payment fails
+     or an operation is cancelled. """
     return render(request, 'payment_canceled.html')
