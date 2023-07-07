@@ -138,3 +138,5 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CART_SESSION_ID = os.getenv('CART_SESSION_ID')
+
+EMAIL_BACKEND = os.getenv('EMAIL_BACKEND')
