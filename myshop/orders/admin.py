@@ -13,6 +13,6 @@ class OrderItemInline(admin.TabularInline):
 class OrderAdmin(admin.ModelAdmin):
     """ Display order information on the admin page. """
     list_display = ['id', 'first_name', 'last_name', 'email', 'address',
-                    'postal_code', 'city', 'paid', 'created', 'updated']
+                    'postal_code', 'city', 'paid', 'created', 'updated', 'stripe_id']
     list_filter = ['paid', 'created', 'updated']
     inlines = [OrderItemInline]
