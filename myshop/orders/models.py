@@ -32,6 +32,21 @@ class Order(models.Model):
         determined by enumeration of each position in the list."""
         return sum(item.get_cost() for item in self.items.all())
 
+    def get_stripe_url(self):
+        """ Get a full url for a test or real payment. """
+        if not self.stripe_id:
+        #  no associated payments
+            return ''
+
+        if '_test_' in settings.STRIPE_SECRET_KEY:
+        #  path for test payments
+            path = '/test/'
+        else:
+        #  path for real payments
+            path = '/'
+
+        return f'https://dashboard.stripe.com{path}payments/{self.stripe_id}'
+
 
 class OrderItem(models.Model):
     """ The model stores data about purchased goods. """
