@@ -15,6 +15,10 @@ class OrderItemInline(admin.TabularInline):
 
 
 def order_stripe_payment(obj):
+    """ Displays in the admin panel
+    the stripe_id of the order for
+    quick navigation to payment details
+    on the Stripe platform. """
     url = obj.get_stripe_url()
     if obj.stripe_id:
         html = f'<a href="{url}" target="_blank">{obj.stripe_id}</a>'
@@ -26,6 +30,7 @@ order_stripe_payment.short_description = 'Stripe payment'
 
 
 def export_to_csv(modeladmin, request, queryset):
+    """ Export orders to a CSV file. """
     opts = modeladmin.model._meta
     content_disposition = f'attachment; filename={opts.verbose_name}.csv'
     response = HttpResponse(content_type='text/csv')
