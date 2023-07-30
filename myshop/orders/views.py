@@ -1,7 +1,6 @@
 import weasyprint
 from django.http import HttpResponse
-from django.shortcuts import render, redirect, get_object_or_404
-from django.shortcuts import reverse
+from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.template.loader import render_to_string
 from django.conf import settings
 from .tasks import order_created
