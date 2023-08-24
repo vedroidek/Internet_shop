@@ -90,4 +90,4 @@ class Cart:
     def get_total_price_after_discount(self):
         """ Will return the final amount of
         the order after deducting the discount. """
-        return self.get_total_price() - seld.get_discount()
+        return self.get_total_price() - self.get_discount()
