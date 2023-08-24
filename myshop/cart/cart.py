@@ -1,6 +1,7 @@
 from decimal import Decimal
 from django.conf import settings
 from shop.models import Product
+from coupons.models import Coupon
 
 
 class Cart:
@@ -16,6 +17,8 @@ class Cart:
             # save empty cart to session
             cart = self.session[settings.CART_SESSION_ID] = {}
         self.cart = cart
+        # save current active coupon
+        self.coupon_id = self.session.get('coupon_id')
 
     def add(self, product: str, quantity: int = 1, override_quantity: bool = False) -> None:
         """ Add a product to the cart or update its quantity. """
