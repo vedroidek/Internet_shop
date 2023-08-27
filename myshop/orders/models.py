@@ -38,7 +38,8 @@ class Order(models.Model):
         which calculates the cost of a similar item. For each type,
         a subset is made and the total cost of the order is
         determined by enumeration of each position in the list."""
-        return sum(item.get_cost() for item in self.items.all())
+        total_cost = self.get_total_cost_before_discount()
+        return total_cost - self.get_discount()
 
     def get_stripe_url(self):
         """ Get a full url for a test or real payment. """
@@ -54,6 +55,15 @@ class Order(models.Model):
             path = '/'
 
         return f'https://dashboard.stripe.com{path}payments/{self.stripe_id}'
+
+    def get_total_cost_before_discount(self):
+        return sum(item.get_cost() for item in self.items.all())
+
+    def get_discount(self):
+        total_cost = self.get_total_cost_before_discount()
+        if self.discount:
+            return total_cost * (self.disount / Decimal(100))
+        return Decimal(0)
 
 
 class OrderItem(models.Model):
